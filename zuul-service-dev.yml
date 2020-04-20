@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: zuul
+  zipkin:
+    base-url: http://mscloud-zipkin-service:8080
+  boot:
+    admin:
+      client:
+        url: http://mscloud-admin-service:2000
+        instance:
+          management-url: http://mscloud-zuul-service:5000/actuator
+          health-url: http://mscloud-zuul-service:5000/actuator/health
+          service-url: http://mscloud-zuul-service:5000
+
+server:
+  port: 5000
+
+eureka:
+  instance:
+    hostname: mscloud-zuul-service
+  client:
+    service-url:
+      # k8s
+      defaultZone: http://mscloud-eureka-service:7000/eureka/
+      # defaultZone: http://eureka-server-7000:7000/eureka/, http://eureka-server-7001:7001/eureka/, http://eureka-server-7002:7002/eureka/
+
+zuul:
+  routes:
+    api-feign:
+      path: /api/feign/**
+      serviceId: consumer-service-feign
+    api-ribbon:
+      path: /api/ribbon/**
+      serviceId: consumer-service-ribbon
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
