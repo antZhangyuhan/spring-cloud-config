@@ -8,10 +8,10 @@ server:
 eureka:
   instance:
     # k8s
-    hostname: mscloud-eureka-service
+    hostname: cloud-eureka-service
   client:
     service-url:
-      defaultZone: http://mscloud-eureka-service:7000/eureka/
+      defaultZone: http://cloud-eureka-service:7000/eureka/
     fetch-registry: false
     register-with-eureka: false
   server:
